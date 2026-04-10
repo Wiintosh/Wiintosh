@@ -54,6 +54,8 @@ Insert the SD card into the Wii U and startup fw.img loader from the SD card. On
 
 Upon reboot, boot the installed system with `load hd:X,\\:tbxi` where `X` is the partition number of the installed system.
 
+The system can be booted in verbose by running `setenv boot-args "-v"` prior to booting Mac OS X. Single user mode can be entered with `setenv boot-args "-s"`.
+
 ## Post installation
 Some versions of OS X will require modifications to IOAudioFamily and IOGraphicsFamily for audio and the framebuffer to work. You'll need to edit both to ensure they are loaded at bootup.
 
