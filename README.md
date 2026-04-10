@@ -5,7 +5,7 @@ Wiintosh is a collection of projects to enable creation of a Hackintosh on the W
 
 Running Mac OS X is accomplished with an Open Firmware implementation (OpenBIOS) loaded from a CFW running on the Starlet or Starbuck. Patches to XNU/BootX are applied and drivers are injected during the BootX load process.
 
-This is still very much a work in progress and there will be instablity and bugs encountered, and not all hardware or possible Mac OS X versions are supported at this time.
+**Note:** This is still very much a work in progress and there will be instablity and bugs encountered, and not all hardware or possible Mac OS X versions are supported at this time.
 
 ## Repositories
 * [wii-loader](https://github.com/Wiintosh/wii-loader) - First stage MINI-based loader for Wii consoles
@@ -36,13 +36,23 @@ Mount the OS X ISO and restore it to the Installer partition, i.e:
 
 ```sudo asr restore --source /Volumes/Mac\ OS\ X\ Install\ Disc\ 1 --target /Volumes/Installer --erase```
 
-Create the hybrid MBR / APM to allow the Wii to boot off the SD card:
+Download [make-hybrid-mbr.sh](make-hybrid-mbr.sh) and create the hybrid MBR / APM to allow the Wii to boot off the SD card. The script will prompt for the disk and modify the MBR.
+
+### Wii
+TODO
+
+### Wii U
 
 Download the required boot files and place at the root of the BOOT partition:
 1. fw.img from the latest release of [wiiu-loader](https://github.com/Wiintosh/wiiu-loader)
 2. fw.img loader Aroma payload and place at the root of the BOOT partition (should be a wiiu folder)
-3. openbios.elf from the latest release of [openbios](https://github.com/Wiintosh/openbios)
+3. openbios-wii.elf from the latest release of [openbios](https://github.com/Wiintosh/openbios)
+    * This **must** be renamed to openbios.elf
 4. Wii.mkext from the latest release of [osx-drivers](https://github.com/Wiintosh/osx-drivers)
+
+Insert the SD card into the Wii U and startup fw.img loader from the SD card. Once in OpenBIOS, load the OS X installer using `load hd:X,\\:tbxi` where `X` is the partition number of the installer partition. The system should then load into the OS X installer. Once in the installer, you can install OS X as normal to the previously created system partition.
+
+Upon reboot, boot the installed system with `load hd:X,\\:tbxi` where `X` is the partition number of the installed system.
 
 ## Support status
 
