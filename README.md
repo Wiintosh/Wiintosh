@@ -5,7 +5,7 @@ Wiintosh is a collection of projects to enable creation of a Hackintosh on the W
 
 Running Mac OS X is accomplished with an Open Firmware implementation (OpenBIOS) loaded from a CFW running on the Starlet or Starbuck. Patches to XNU/BootX are applied and drivers are injected during the BootX load process.
 
-**Note:** This is still very much a work in progress and there will be instablity and bugs encountered, and not all hardware or possible Mac OS X versions are supported at this time.
+**Note:** This is still very much a work in progress and there will be instablity and bugs encountered, and not all hardware or possible Mac OS X versions are supported at this time. Currently Wii U is the best supported as the Wii does not have enough resources to run most OS X versions. Contributions/suggestions to code and documentation is welcome.
 
 ## Repositories
 * [wii-loader](https://github.com/Wiintosh/wii-loader) - First stage MINI-based loader for Wii consoles
