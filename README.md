@@ -54,6 +54,23 @@ Insert the SD card into the Wii U and startup fw.img loader from the SD card. On
 
 Upon reboot, boot the installed system with `load hd:X,\\:tbxi` where `X` is the partition number of the installed system.
 
+## Post installation
+Some versions of OS X will require modifications to IOAudioFamily and IOGraphicsFamily for audio and the framebuffer to work. You'll need to edit both to ensure they are loaded at bootup.
+
+`sudo vi /System/Library/Extensions/IOAudioFamily.kext/Contents/Info.plist`
+`sudo vi /System/Library/Extensions/IOGraphicsFamily.kext/Info.plist`
+
+For both files, type `i` to enter insert mode and append the following after the last key, but before the closing plist:
+
+```
+<key>OSBundleRequired</key>
+<string>Root</string>
+```
+
+Save and quit with `:wq`.
+
+After both edits are made, run `sudo touch /System/Library/Extensions` to force a kext cache rebuild and reboot. The next bootup may take several minutes as the system will boot without a kext cache. Once booted, graphics framebuffer and audio should be fully functional.
+
 ## Support status
 
 ### Version status
