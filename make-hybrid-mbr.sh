@@ -25,9 +25,9 @@ diskutil info -plist "$disk" > diskutil.plist
 #
 # Get partition info
 #
-blockSize=$(/usr/libexec/PlistBuddy -c "Print :DeviceBlockSize" diskinfo.plist)
-partOffsetRaw=$(/usr/libexec/PlistBuddy -c "Print :PartitionMapPartitionOffset" diskinfo.plist)
-partSizeRaw=$(/usr/libexec/PlistBuddy -c "Print :Size" diskinfo.plist)
+blockSize=$(/usr/libexec/PlistBuddy -c "Print :DeviceBlockSize" diskutil.plist)
+partOffsetRaw=$(/usr/libexec/PlistBuddy -c "Print :PartitionMapPartitionOffset" diskutil.plist)
+partSizeRaw=$(/usr/libexec/PlistBuddy -c "Print :Size" diskutil.plist)
 sudo rm -f diskutil.plist
 
 partOffset=$((partOffsetRaw / blockSize))
