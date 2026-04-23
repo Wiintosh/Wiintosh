@@ -39,19 +39,21 @@ sudo dd if=/dev/disk"${diskNumber}" of=disksector.bin bs=1 count=512 conv=notrun
 # Create MBR partition record.
 #
 echo "Writing FAT32 MBR partition..."
+
 printf '\x00\xFE\xFF\xFF\x0B\xFE\xFF\xFF' | sudo dd of=disksector.bin bs=1 seek=446 conv=notrunc
-printf "$((printf '\\x%02x\\x%02x\\x%02x\\x%02x' \
-  $(( partOffset & 0xFF )) \
-  $(( (partOffset >> 8) & 0xFF )) \
-  $(( (partOffset >> 16) & 0xFF )) \
-  $(( (partOffset >> 24) & 0xFF )) ))" \
-| sudo dd of=disksector.bin bs=1 seek=454 conv=notrunc
-printf "$((printf '\\x%02x\\x%02x\\x%02x\\x%02x' \
-  $(( partSize & 0xFF )) \
-  $(( (partSize >> 8) & 0xFF )) \
-  $(( (partSize >> 16) & 0xFF )) \
-  $(( (partSize >> 24) & 0xFF )) ))" \
-| sudo dd of=disksector.bin bs=1 seek=458 conv=notrunc
+b0=$((partOffset & 0xFF))
+b1=$(((partOffset >> 8) & 0xFF))
+b2=$(((partOffset >> 16) & 0xFF))
+b3=$(((partOffset >> 24) & 0xFF))
+printf "$(printf '\\x%02x\\x%02x\\x%02x\\x%02x' "$b0" "$b1" "$b2" "$b3")" \
+  | sudo dd of=disksector.bin bs=1 seek=454 conv=notrunc
+
+b0=$((partOfpartSizefset & 0xFF))
+b1=$(((partSize >> 8) & 0xFF))
+b2=$(((partSize >> 16) & 0xFF))
+b3=$(((partSize >> 24) & 0xFF))
+printf "$(printf '\\x%02x\\x%02x\\x%02x\\x%02x' "$b0" "$b1" "$b2" "$b3")" \
+  | sudo dd of=disksector.bin bs=1 seek=458 conv=notrunc
 
 printf '\x00\x00\x00\x00\x00\x00\x00\x00' | sudo dd of=disksector.bin bs=1 seek=462 conv=notrunc
 
