@@ -16,7 +16,7 @@ sudo diskutil unmountDisk force disk"${diskNumber}"
 #
 # Find the first FAT32 partition entry.
 #
-partEntry=$(sudo pdisk "/dev/rdisk$diskNumber" -dump | awk '$2=="DOS_FAT_32" {print; exit}')
+partEntry=$(sudo pdisk "/dev/rdisk$diskNumber" -dump | awk '/^[[:space:]]*[0-9]+:/ && $2=="DOS_FAT_32" {print; exit}')
 if [ -z "$partEntry" ]; then
     echo "No FAT32 partition found."
     exit 1
@@ -26,8 +26,8 @@ fi
 # Get partition info.
 #
 partNumber=$(echo "$partEntry" | awk '{print $1}' | sed 's/://')
-partSize=$(echo "$partEntry" | awk '{print $4}')
-partOffset=$(echo "$partEntry" | awk '{print $6}')
+partSize=$(echo "$partEntry" | awk '{for(i=1;i<=NF;i++) if($i=="@") print $(i-1)}')
+partOffset=$(echo "$partEntry" | awk '{for(i=1;i<=NF;i++) if($i=="@") print $(i+1)}')
 echo "FAT32 on part $partNumber at block $partOffset size $partSize"
 
 #
@@ -48,7 +48,7 @@ b3=$(((partOffset >> 24) & 0xFF))
 printf "$(printf '\\x%02x\\x%02x\\x%02x\\x%02x' "$b0" "$b1" "$b2" "$b3")" \
   | sudo dd of=disksector.bin bs=1 seek=454 conv=notrunc
 
-b0=$((partOfpartSizefset & 0xFF))
+b0=$((partSize & 0xFF))
 b1=$(((partSize >> 8) & 0xFF))
 b2=$(((partSize >> 16) & 0xFF))
 b3=$(((partSize >> 24) & 0xFF))
