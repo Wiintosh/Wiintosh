@@ -19,42 +19,54 @@ Running Mac OS X is accomplished with an Open Firmware implementation (OpenBIOS)
 ### Requirements
 Either a Wii with [BootMii](https://bootmii.org) or a Wii U with [Aroma](https://aroma.foryour.cafe) is required. You will also need a reasonably sized SD card and a USB keyboard/mouse. Currently instructions are provided for macOS only, but Linux can be used as well.
 
+### SD card partitioning
 Partition the card as Apple Partition Map (APM), creating three partitions:
 * FAT32 boot partition
 * Mac OS X system partition
-* Mac OS X installer partition
+* Mac OS X installer partition (example shows 1GB, but this may need to be larger for newer versions of Mac OS X, i.e. Tiger)
 
 The installer partition can eventually be removed later once Mac OS X has been installed.
 ```
 diskutil partitionDisk diskX APM \
-    FAT32 "BOOT" 128M \
+    "MS-DOS FAT32" "BOOT" 128M \
     HFS+ "Hackintosh HD" R \
-    HFS+ "Installer" 4G
+    HFS+ "Installer" 1G
 ```
 
+### Installer creation
 Mount the OS X ISO and restore it to the Installer partition, i.e:
 
 ```sudo asr restore --source /Volumes/Mac\ OS\ X\ Install\ Disc\ 1 --target /Volumes/Installer --erase```
 
+DD can also be used, ensure both the ISO and partition are unmounted and copy the installer partition to the SD card:
+
+```sudo dd if=/dev/diskXsY of=/dev/diskAsB bs=4096 status=progress```
+
+### SD card prep and boot files
 Download [make-hybrid-mbr.sh](make-hybrid-mbr.sh) and create the hybrid MBR / APM to allow the Wii to boot off the SD card. The script will prompt for the disk and modify the MBR.
 
-### Wii
-TODO
-
-### Wii U
-
 Download the required boot files and place at the root of the BOOT partition:
-1. fw.img from the latest release of [wiiu-loader](https://github.com/Wiintosh/wiiu-loader)
-2. fw.img loader Aroma payload and place at the root of the BOOT partition (should be a wiiu folder)
-3. openbios-wii.elf from the latest release of [openbios](https://github.com/Wiintosh/openbios)
+1. First-stage loader
+    * Wii
+        1. armboot.bin from the latest release of [wii-loader](https://github.com/Wiintosh/wii-loader) and place into a folder named `bootmii`
+    * Wii U
+        1. fw.img from the latest release of [wiiu-loader](https://github.com/Wiintosh/wiiu-loader)
+        2. fw.img loader Aroma payload, placed into a folder named `wiiu`
+2. openbios-wii.elf from the latest release of [openbios](https://github.com/Wiintosh/openbios)
     * This **must** be renamed to openbios.elf
-4. Wii.mkext from the latest release of [osx-drivers](https://github.com/Wiintosh/osx-drivers)
+3. Drivers mkext from the latest release of [osx-drivers](https://github.com/Wiintosh/osx-drivers)
+    * Download the mkext version appropriate for the Mac OS X version being installed. If multi-booting, ensure all applicable versions are present.
 
-Insert the SD card into the Wii U and startup fw.img loader from the SD card. Once in OpenBIOS, load the OS X installer using `load hd:X,\\:tbxi` where `X` is the partition number of the installer partition. The system should then load into the OS X installer. Once in the installer, you can install OS X as normal to the previously created system partition.
+### Boot and installation
+Insert the SD card into the console. On the Wii, BootMii will startup OpenBIOS automatically. On the Wii U enter Aroma and load the fw.img loader payload. By default, the system should load the Mac OS X installer. Once in the installer, you can install OS X as normal to the previously created system partition.
 
-Upon reboot, boot the installed system with `load hd:X,\\:tbxi` where `X` is the partition number of the installed system.
+**NOTE:** OpenBIOS keyboard input currently does not function on the Wii. If the installer partition does not auto boot, you may need to manually bless the installer partition.
 
-The system can be booted in verbose by running `setenv boot-args "-v"` prior to booting Mac OS X. Single user mode can be entered with `setenv boot-args "-s"`.
+If the installer does not boot, run `load hd:X,\\:tbxi` to boot the installer, where `X` is the installer partition.
+
+* To prevent automatic boot, create a file named `disable-autoboot` at the root of the BOOT partition.
+* To boot in verbose, run `setenv boot-args "-v"` prior to booting Mac OS X.
+* To boot in single user, run `setenv boot-args "-s"` prior to booting Mac OS X.
 
 ## Post installation
 Some versions of OS X will require modifications to IOAudioFamily and IOGraphicsFamily for audio and the framebuffer to work. You'll need to edit both to ensure they are loaded at bootup.
@@ -79,11 +91,11 @@ After both edits are made, run `sudo touch /System/Library/Extensions` to force 
 
 | Version       | Supported                  |
 |---------------|----------------------------|
-| 10.0 Cheetah  | No                         |
-| 10.1 Puma     | No                         |
+| 10.0 Cheetah  | Yes, no audio              |
+| 10.1 Puma     | Yes                        |
 | 10.2 Jaguar   | Yes                        |
 | 10.3 Panther  | Yes (Wii U only)           |
-| 10.4 Tiger    | Yes, but cannot use installer (Wii U only) |
+| 10.4 Tiger    | Yes, maybe be unable to use installer (Wii U only) |
 | 10.5 Leopard  | Never, requires a G4       |
 | 10.6 Snow Leopard | Never, requires a G4   |
 
