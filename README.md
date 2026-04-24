@@ -98,8 +98,8 @@ After both edits are made, run `sudo touch /System/Library/Extensions` to force 
 | 10.2 Jaguar   | Yes                        |
 | 10.3 Panther  | Yes (Wii U only)           |
 | 10.4 Tiger    | Yes, use a 10.4.0 installer (Wii U only) |
-| 10.5 Leopard  | Never, requires a G4       |
-| 10.6 Snow Leopard | Never, requires a G4   |
+| 10.5 Leopard  | No, requires a G4       |
+| 10.6 Snow Leopard | No, requires a G4   |
 
 ### Wii hardware support status
 | Hardware                                            | Supported                                   |
