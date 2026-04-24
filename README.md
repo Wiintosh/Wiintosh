@@ -56,6 +56,7 @@ Download the required boot files and place at the root of the BOOT partition:
     * This **must** be renamed to openbios.elf
 3. Drivers mkext from the latest release of [osx-drivers](https://github.com/Wiintosh/osx-drivers)
     * Download the mkext version appropriate for the Mac OS X version being installed. If multi-booting, ensure all applicable versions are present.
+    * The Kexts folder is provided as a reference only and does not need to be copied to the SD card
 
 ### Boot and installation
 Insert the SD card into the console. On the Wii, BootMii will startup OpenBIOS automatically. On the Wii U enter Aroma and load the fw.img loader payload. By default, the system should load the Mac OS X installer. Once in the installer, you can install OS X as normal to the previously created system partition.
@@ -95,7 +96,7 @@ After both edits are made, run `sudo touch /System/Library/Extensions` to force 
 | 10.1 Puma     | Yes                        |
 | 10.2 Jaguar   | Yes                        |
 | 10.3 Panther  | Yes (Wii U only)           |
-| 10.4 Tiger    | Yes, maybe be unable to use installer (Wii U only) |
+| 10.4 Tiger    | Yes, use a 10.4.0 installer (Wii U only) |
 | 10.5 Leopard  | Never, requires a G4       |
 | 10.6 Snow Leopard | Never, requires a G4   |
 
