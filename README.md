@@ -8,11 +8,12 @@ Running Mac OS X is accomplished with an Open Firmware implementation (OpenBIOS)
 **Note:** This is still very much a work in progress and there will be instablity and bugs encountered, and not all hardware or possible Mac OS X versions are supported at this time. Currently Wii U is the best supported as the Wii does not have enough resources to run most OS X versions. Contributions/suggestions to code and documentation is welcome.
 
 ## Repositories
-* [wii-loader](https://github.com/Wiintosh/wii-loader) - First stage MINI-based loader for Wii consoles
-* [wiiu-loader](https://github.com/Wiintosh/wiiu-loader) - First stage linux-loader based loader for Wii U consoles
-* [openbios](https://github.com/Wiintosh/openbios) - OpenBIOS implementation for the Wii and Wii U hardware
-* [osx-drivers](https://github.com/Wiintosh/osx-drivers) - Kernel extensions for Mac OS X supporting Wii and Wii U hardware
-
+| Repository        | Description | Latest Release    | Build Status  |
+|-------------------|-------------------|-------------------|---------------|
+| [openbios](https://github.com/Wiintosh/openbios) | OpenBIOS implementation for the Wii and Wii U hardware | [1.0.1](https://github.com/Wiintosh/openbios/releases/latest) | [![Build Status](https://github.com/Wiintosh/openbios/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Wiintosh/openbios/actions) |
+| [osx-drivers](https://github.com/Wiintosh/osx-drivers) | Kernel extensions for Mac OS X supporting Wii and Wii U hardware | [0.5.2](https://github.com/Wiintosh/osx-drivers/releases/latest) | [![Build Status](https://github.com/Wiintosh/osx-drivers/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/Wiintosh/osx-drivers/actions) |
+| [wii-loader](https://github.com/Wiintosh/wii-loader) | First stage MINI-based loader for Wii consoles | [1.0.0](https://github.com/Wiintosh/wii-loader/releases/latest) | [![Build Status](https://github.com/Wiintosh/wii-loader/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Wiintosh/wii-loader/actions) |
+| [wiiu-loader](https://github.com/Wiintosh/wiiu-loader) | First stage linux-loader based loader for Wii U consoles | [1.0.1](https://github.com/Wiintosh/wiiu-loader/releases/latest) | [![Build Status](https://github.com/Wiintosh/wiiu-loader/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/Wiintosh/wiiu-loader/actions) |
 
 ## Installation
 
